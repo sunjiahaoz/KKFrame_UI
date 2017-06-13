@@ -4,7 +4,7 @@ using System.Collections;
 namespace KK.Frame.UI
 {
     [System.Serializable]
-    public class UIConfigInfo
+    public class UIFrameItem
     {
         // 预设
         public UIFrame _prefabFrame;
