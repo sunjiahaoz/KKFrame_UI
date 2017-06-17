@@ -5,7 +5,7 @@ using System.IO;
 using System.Text;
 using UnityEngine;
 
-namespace sunjiahaoz
+namespace KK.Frame.Util
 {
     public class ToolsUseful
     {

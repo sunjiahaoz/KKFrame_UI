@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using KK.Frame.Util;
 
 namespace KK.Frame.UI
 {
@@ -188,7 +189,7 @@ namespace KK.Frame.UI
         // 隐藏某个层级下的界面，如果参数为-1表示隐藏所有层级界面
         void _HideAll(int nPannelIndex = -1)
         {
-            sunjiahaoz.ToolsUseful.TravelDict<string, UIFrame>(dictLoadedFrame, (frame) => 
+            ToolsUseful.TravelDict<string, UIFrame>(dictLoadedFrame, (frame) => 
             {
                 if (nPannelIndex == -1
                 || dictItems[frame.FrameId]._nPannelIndex == nPannelIndex)
@@ -223,7 +224,7 @@ namespace KK.Frame.UI
         }
         void _DestroyAll()
         {
-            sunjiahaoz.ToolsUseful.TravelDict<string, UIFrame>(dictLoadedFrame, (frame) => 
+            ToolsUseful.TravelDict<string, UIFrame>(dictLoadedFrame, (frame) => 
             {
                 frame.OnFrameDestroy();
                 GameObject.DestroyImmediate(frame.gameObject);
