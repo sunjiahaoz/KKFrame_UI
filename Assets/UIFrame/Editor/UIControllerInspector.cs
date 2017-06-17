@@ -23,8 +23,8 @@ namespace KK.Frame.UI
             {
                 uc._uiRoot = (UIRoot)EditorGUILayout.ObjectField(uc._uiRoot, typeof(UIRoot), true);
             }
-            EditorGUILayout.LabelField("Please Lock The Inspector", GUILayout.Width(300));
-            
+            EditorGUILayout.LabelField("Please Lock The Inspector", GUILayout.Width(300));      
+      
             if(GUILayout.Button("Add Selected Frame To UIController",GUILayout.Height(20)))     //添加新的Frame的按钮
             {
                int i =  AddNewFrame(uc);
@@ -54,10 +54,10 @@ namespace KK.Frame.UI
                 }
                 EditorGUILayout.EndHorizontal();
                     uc._frameItems[index]._strFrameID = EditorGUILayout.TextField("FrameId", uc._frameItems[index]._strFrameID);
-                    int.TryParse(EditorGUILayout.TextField("PannelIndex", uc._frameItems[index]._nPannelIndex.ToString()), out uc._frameItems[index]._nPannelIndex);
+                    uc._frameItems[index]._nPannelIndex = EditorGUILayout.IntField("PannelIndex", uc._frameItems[index]._nPannelIndex);
                     uc._frameItems[index]._prefabFrame = (UIFrame)EditorGUILayout.ObjectField("Prefab", uc._frameItems[index]._prefabFrame, typeof(UIFrame), true);     
-              }
-            
+             }
+
             EditorGUILayout.EndVertical();
             Undo.RecordObject(target,"tar change");         //用于保存编辑的数据
         }
@@ -98,17 +98,17 @@ namespace KK.Frame.UI
             }
             return ufiarray;
         }
-        private List<UIFrameItem> ArrayConverseToList(UIFrameItem[] uiarray)
+        private List<UIFrameItem> ArrayConverseToList(UIFrameItem[] _uiArray)
         {
-            List<UIFrameItem> li = new List<UIFrameItem>();
-            for (int i = 0; i < uiarray.Length; i++)
+            List<UIFrameItem> _lUiList = new List<UIFrameItem>();
+            for (int i = 0; i < _uiArray.Length; i++)
             {
-                if (uiarray[i] != null) 
+                if (_uiArray[i] != null)            //把不为null的数组都添加到新建的链表中
                 {
-                    li.Add(uiarray[i]);
+                    _lUiList.Add(_uiArray[i]);
                 }
             }
-            return li;
+            return _lUiList;
         }
         //void OnInspectorUpdate()
         //{
