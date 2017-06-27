@@ -87,6 +87,11 @@ namespace KK.Frame.UI
                 }
                 
                 UIFrame uf = go.GetComponent<UIFrame>();
+                if (uf == null)
+                {
+                    Debug.LogError("<color=red>[Error]</color>---" + obj + "上没有UIFrame组件！！", obj);                    
+                    continue;
+                }
                 ufi._prefabFrame = uf;
                 uf.FrameId = strFrameId;
                 ufi._strFrameID = uf.FrameId;

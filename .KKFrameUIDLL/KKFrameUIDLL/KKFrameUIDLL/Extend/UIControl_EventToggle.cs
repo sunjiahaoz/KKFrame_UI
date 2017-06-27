@@ -2,7 +2,6 @@
 using UnityEngine.UI;
 using System.Collections;
 using UnityEngine.Events;
-using KK.Frame.Util;
 
 namespace  KK.Frame.UI
 {
@@ -21,7 +20,12 @@ namespace  KK.Frame.UI
             {
                 if (_toggle == null)
                 {
-                    _toggle = ToolsUseful.DefaultGetComponent<Toggle>(gameObject);
+                    _toggle = gameObject.GetComponent<Toggle>();
+                    if (_toggle == null)
+                    {
+                        _toggle = gameObject.AddComponent<Toggle>();
+                    }
+
                 }
                 return _toggle;
             }

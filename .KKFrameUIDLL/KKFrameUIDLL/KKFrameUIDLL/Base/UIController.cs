@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
-using KK.Frame.Util;
 
 namespace KK.Frame.UI
 {
@@ -189,14 +188,17 @@ namespace KK.Frame.UI
         // 隐藏某个层级下的界面，如果参数为-1表示隐藏所有层级界面
         void _HideAll(int nPannelIndex = -1)
         {
-            ToolsUseful.TravelDict<string, UIFrame>(dictLoadedFrame, (frame) => 
+            using (Dictionary<string, UIFrame>.Enumerator tor = dictLoadedFrame.GetEnumerator())
             {
-                if (nPannelIndex == -1
-                || dictItems[frame.FrameId]._nPannelIndex == nPannelIndex)
+                while (tor.MoveNext())
                 {
-                    frame.OnFrameHide();                    
+                    if (nPannelIndex == -1
+                        || dictItems[tor.Current.Value.FrameId]._nPannelIndex == nPannelIndex)
+                    {
+                        tor.Current.Value.OnFrameHide();
+                    }
                 }
-            });
+            }
         }
         /// <summary>
         /// 获取某个界面的句柄
@@ -224,11 +226,14 @@ namespace KK.Frame.UI
         }
         void _DestroyAll()
         {
-            ToolsUseful.TravelDict<string, UIFrame>(dictLoadedFrame, (frame) => 
+            using (Dictionary<string, UIFrame>.Enumerator tor = dictLoadedFrame.GetEnumerator())
             {
-                frame.OnFrameDestroy();
-                GameObject.DestroyImmediate(frame.gameObject);
-            });
+                while (tor.MoveNext())
+                {
+                    tor.Current.Value.OnFrameDestroy();
+                    GameObject.DestroyImmediate(tor.Current.Value.gameObject);                    
+                }
+            }
             dictLoadedFrame.Clear();
         }
         #endregion

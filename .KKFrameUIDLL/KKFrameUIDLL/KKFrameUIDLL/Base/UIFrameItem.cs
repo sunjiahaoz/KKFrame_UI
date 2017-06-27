@@ -6,11 +6,17 @@ namespace KK.Frame.UI
     [System.Serializable]
     public class UIFrameItem
     {
-        // 预设
+        /// <summary>
+        /// 预设
+        /// </summary>
         public UIFrame _prefabFrame;
-        // 窗口ID
+        /// <summary>
+        /// 窗口ID
+        /// </summary>
         public string _strFrameID;
-        // 实例化时所在UIRoot的Pannel
+        /// <summary>
+        /// 实例化时所在UIRoot的Pannel
+        /// </summary>
         public int _nPannelIndex;        
     }
 }

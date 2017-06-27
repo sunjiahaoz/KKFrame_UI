@@ -1,0 +1,219 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>KKFrameUIDLL</name>
+    </assembly>
+    <members>
+        <member name="F:KK.Frame.UI.UIController._uiRoot">
+            <summary>
+            主C必须需要一个UIRoot
+            </summary>
+        </member>
+        <member name="M:KK.Frame.UI.UIController._ShowUI(System.String,System.Action{KK.Frame.UI.UIFrame})">
+            <summary>
+            显示UI，没有实例化过就先实例化
+            </summary>
+            <param name="strFrameId"></param>
+            <param name="actionAfterShow"></param>
+        </member>
+        <member name="M:KK.Frame.UI.UIController._HideUI(System.String)">
+            <summary>
+            隐藏界面
+            </summary>
+            <param name="strFrameId"></param>
+        </member>
+        <member name="M:KK.Frame.UI.UIController._GetFrame(System.String)">
+            <summary>
+            获取某个界面的句柄
+            如果该界面没有显示过，则返回null
+            </summary>
+            <param name="strFrameId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:KK.Frame.UI.UIFrame.OnFrameLoad">
+            <summary>
+            资源加载完
+            同一个IFrame应该只执行一次该函数
+            </summary>
+        </member>
+        <member name="M:KK.Frame.UI.UIFrame.OnFrameShow">
+            <summary>        
+            由隐藏状态转入显示的时候执行        
+            </summary>
+        </member>
+        <member name="M:KK.Frame.UI.UIFrame.OnFrameHide">
+            <summary>
+            由显示状态转入隐藏的时候执行
+            </summary>
+        </member>
+        <member name="M:KK.Frame.UI.UIFrame.OnFrameDestroy">
+            <summary>
+            资源销毁
+            同一个IFrame应该只执行一次该函数
+            </summary>
+        </member>
+        <member name="F:KK.Frame.UI.UIFrameItem._prefabFrame">
+            <summary>
+            预设
+            </summary>
+        </member>
+        <member name="F:KK.Frame.UI.UIFrameItem._strFrameID">
+            <summary>
+            窗口ID
+            </summary>
+        </member>
+        <member name="F:KK.Frame.UI.UIFrameItem._nPannelIndex">
+            <summary>
+            实例化时所在UIRoot的Pannel
+            </summary>
+        </member>
+        <member name="M:KK.Frame.UI.UIControl_List.CreateAndAddItem(KK.Frame.UI.UIControl_ListItemBase,System.Action{KK.Frame.UI.UIControl_ListItemBase})">
+            <summary>
+            根据prefab创建一个新的item，并添加到列表中
+            </summary>
+            <param name="prefab">要实例化的预制体</param>
+            <returns>实例化的item</returns>
+        </member>
+        <member name="M:KK.Frame.UI.UIControl_List.AddItem(KK.Frame.UI.UIControl_ListItemBase)">
+            <summary>
+            添加一项
+            </summary>
+            <param name="item"></param>
+            <returns>返回该项的索引</returns>
+        </member>
+        <member name="M:KK.Frame.UI.UIControl_List.Remove(KK.Frame.UI.UIControl_ListItemBase)">
+            <summary>
+            按对象移除
+            </summary>
+            <param name="item"></param>
+        </member>
+        <member name="M:KK.Frame.UI.UIControl_List.RemoveItemAt(System.Int32)">
+            <summary>
+            按索引移除
+            </summary>
+            <param name="nIndex"></param>
+        </member>
+        <member name="M:KK.Frame.UI.UIControl_List.GetItemAt(System.Int32)">
+            <summary>
+            获得指定索引的道具
+            </summary>
+            <param name="nIndex"></param>
+            <returns></returns>
+        </member>
+        <member name="M:KK.Frame.UI.UIControl_List.ResetContent">
+            <summary>
+            清空
+            </summary>
+        </member>
+        <member name="M:KK.Frame.UI.UIControl_List.ReSortCustom(System.Comparison{UnityEngine.Transform})">
+            <summary>
+            自定义排序
+            </summary>
+            <param name="customSortFunc"></param>
+        </member>
+        <member name="M:KK.Frame.UI.UIControl_List.ElemCount">
+            <summary>
+            元素数量
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:KK.Frame.UI.UIControl_ListWithPool.CreateAndAddItem(KK.Frame.UI.UIControl_ListItemBase,System.Action{KK.Frame.UI.UIControl_ListItemBase})">
+            <summary>
+            虽然有个prefab参数，貌似可以填充任意的ItemBase，
+            但实际每次只能传入同一个prefab,否则池子可不会区分你两个prefab的不同
+            如果传入的prefab不同，出现什么后果我可不管
+            </summary>
+            <param name="prefab"></param>
+            <param name="dosth"></param>
+            <returns></returns>
+        </member>
+        <member name="T:KK.Frame.UI.SingletonMonoBehaviour`1">
+            <summary>
+            Provides singleton-like access to a unique instance of a MonoBehaviour. <para/>
+            </summary>
+            <example>
+            Derive your own class from SingletonMonoBehaviour. <para/>
+            <code>
+            public class MyScriptClass : SingletonMonoBehaviour&lt;MyScriptClass&gt;
+            {
+                public MyScriptClass()
+                {
+                    MyScriptClass.SetSingletonType( typeof( MyScriptClass ) ); // workaround for Flash
+                }
+                public void MyFunction() { }
+                protected override void Awake()
+                {
+                    base.Awake();
+                }
+                void AwakeSingleton()
+                {
+                    // all initialisation code here. Will get called from Awake() by singleton.
+                    // Can get called before Awake() if an instance is accessed in an Awake() function which
+                    // was called earlier
+                }
+            }
+            </code>
+            <para/>
+            access the instance by writing
+            <code>
+            MyScriptClass.Instance.MyFunction();
+            </code>
+            </example>
+            <typeparam name="T">Your singleton MonoBehaviour</typeparam>
+            <remarks>
+            Makes sure that an instance is available from other Awake() calls even before the singleton's Awake()
+            was called. ( Requires AwakeSingleton() !)
+            </remarks>
+        </member>
+        <member name="P:KK.Frame.UI.SingletonMonoBehaviour`1.Instance">
+            <summary>
+            Gets the singleton instance.
+            </summary>
+            <returns>
+            A reference to the instance if it exists, otherwise <c>null</c>
+            </returns>
+            <remarks>
+            Outputs an error to the debug log if no instance was found.
+            </remarks>
+        </member>
+        <member name="M:KK.Frame.UI.SingletonMonoBehaviour`1.DoesInstanceExist">
+            <summary>
+            Checks if an instance of this MonoBehaviour exists.
+            </summary>
+            <returns>
+            A reference to the instance if it exists, otherwise <c>null</c>
+            </returns>
+        </member>
+        <member name="M:KK.Frame.UI.SingletonMonoBehaviour`1.ActivateSingletonInstance">
+            <summary>
+            Activates the singleton instance.
+            </summary>
+            <remarks>
+            Call this function if you set an singleton object inactive before ever accessing the <c>Instance</c>. This is 
+            required because Unity does not (yet) offer a way to find inactive game objects.
+            </remarks>
+        </member>
+        <member name="M:KK.Frame.UI.SingletonMonoBehaviour`1.SetSingletonAutoCreate(UnityEngine.GameObject)">
+            <summary>
+            Sets the object to be instantiated automatically if no instance of the singleton is found.
+            </summary>
+            <param name="autoCreatePrefab">The prefab to be instantiated automatically.</param>
+            <remarks>
+            Either the game object itself or one of its child objects must contain the singleton component
+            </remarks>
+        </member>
+        <member name="M:KK.Frame.UI.SingletonMonoBehaviour`1.SetSingletonType(System.Type)">
+            <summary>
+            Only required for Flash builds. If this function is not called by the class deriving from 
+            SingletonMonoBehaviour in the constructor the singleton can not be found by GetSingleton(...)
+            </summary>
+            <param name="type"></param>
+        </member>
+        <member name="P:KK.Frame.UI.SingletonMonoBehaviour`1.isSingletonObject">
+            <summary>
+            must return true if this instance of the object is the singleton. Can be used to allow multiple objects of this type
+            that are "add-ons" to the singleton.
+            </summary>
+        </member>
+    </members>
+</doc>
