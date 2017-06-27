@@ -34,7 +34,7 @@ namespace KK.Frame.UI
                }
             }
             
-            if (uc._frameItems.Length != 0)
+            if (uc._frameItems!=null&&uc._frameItems.Length != 0)
             {
                 string[] _saFrameItemName = new string[uc._frameItems.Length];
                 for (int i = 0; i < uc._frameItems.Length; i++)
@@ -64,7 +64,7 @@ namespace KK.Frame.UI
         private void RemoveFrame(UIController uc,int index) 
         {
             uc._frameItems[index] = null;
-            List<UIFrameItem> li = ArrayConverseToList(uc._frameItems);
+            Dictionary<string, UIFrameItem> li = ArrayConverseToList(uc._frameItems);            
             uc._frameItems = ListConverseToArray(li);
         }
         private int AddNewFrame(UIController uc)
@@ -74,38 +74,52 @@ namespace KK.Frame.UI
             {
                 return -1;
             }
-            List<UIFrameItem> _liEditUse = ArrayConverseToList(uc._frameItems);
+            Dictionary<string, UIFrameItem> _liEditUse = ArrayConverseToList(uc._frameItems);
+            string strFrameId = "";
             foreach (Object obj in selection)
             {               
                 UIFrameItem ufi = new UIFrameItem();
                 GameObject go = (GameObject)obj;
+                strFrameId = "ID_" + go.name;
+                if (_liEditUse.ContainsKey(strFrameId))
+                {
+                    continue;
+                }
+                
                 UIFrame uf = go.GetComponent<UIFrame>();
                 ufi._prefabFrame = uf;
-                uf.FrameId = "ID_" + uf.gameObject.name;
+                uf.FrameId = strFrameId;
                 ufi._strFrameID = uf.FrameId;
                 ufi._nPannelIndex = 1;
-                _liEditUse.Add(ufi);
+                _liEditUse.Add(strFrameId, ufi);
             }
             uc._frameItems = ListConverseToArray(_liEditUse);
             return _liEditUse.Count - 1;
         }
-        private UIFrameItem[] ListConverseToArray(List<UIFrameItem> li)
+        private UIFrameItem[] ListConverseToArray(Dictionary<string, UIFrameItem> li)
         {
             UIFrameItem[] ufiarray = new UIFrameItem[li.Count];
-            for (int i = 0; i < li.Count;i++ )
-            {
-                ufiarray[i] = li[i];
-            }
+            var tor = li.Values.GetEnumerator();
+            int nIndex = 0;
+            while(tor.MoveNext())
+            {                
+                ufiarray[nIndex++] = tor.Current;                
+            }            
             return ufiarray;
         }
-        private List<UIFrameItem> ArrayConverseToList(UIFrameItem[] _uiArray)
+        private Dictionary<string, UIFrameItem> ArrayConverseToList(UIFrameItem[] _uiArray)
         {
-            List<UIFrameItem> _lUiList = new List<UIFrameItem>();
+            Dictionary<string, UIFrameItem> _lUiList = new Dictionary<string, UIFrameItem>();
+            if (_uiArray.Length == 0) 
+            {
+                return _lUiList;
+            }
+            
             for (int i = 0; i < _uiArray.Length; i++)
             {
                 if (_uiArray[i] != null)            //把不为null的数组都添加到新建的链表中
                 {
-                    _lUiList.Add(_uiArray[i]);
+                    _lUiList.Add(_uiArray[i]._strFrameID, _uiArray[i]);
                 }
             }
             return _lUiList;
